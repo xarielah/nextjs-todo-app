@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/react'
 
 const Card = ({ data }) => {
-
+    console.log(data)
     return (
         <>
         </>
