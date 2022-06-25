@@ -1,4 +1,5 @@
 import NoTasks from '../components/notasks'
+import DisplayTasks from '../components/displaytasks'
 import axios from 'axios'
 import { Box } from '@chakra-ui/react'
 
@@ -20,9 +21,8 @@ const Home = ({ data }) => {
       {data.count === 0
         ?
         <NoTasks />
-        : <>
-          שדג
-        </>}
+        :
+        <DisplayTasks data={data} />}
     </Box>
   )
 }

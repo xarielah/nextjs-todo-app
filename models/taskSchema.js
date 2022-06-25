@@ -21,6 +21,13 @@ const taskSchema = new Schema({
     cat: {
         type: String,
         required: true
+    },
+    createdAt: {
+        type: Date,
+        default: new Date(Date.now())
+    },
+    pinned: {
+        type: Boolean
     }
 })
 

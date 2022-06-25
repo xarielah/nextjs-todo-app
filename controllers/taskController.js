@@ -4,10 +4,14 @@ import Task from '../models/taskSchema'
 export async function createTask(req, res) {
     try {
         await ConnectDB()
-    } catch (err) {
+        const { data: { title, color, desc, pinned, urgency, cat } } = req.body
 
+        const newItem = await Task.create({ title, color, desc, pinned, urgency, cat })
+        return res.status(200).end()
+    } catch (err) {
+        console.log(err)
+        return res.status(500).end()
     }
-    return res.send('hello world')
 }
 
 export async function deleteTask(req, res) {

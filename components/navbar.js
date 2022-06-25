@@ -6,14 +6,21 @@ import {
     Container,
     Flex,
     Button,
-    Link
+    Slide,
+    useDisclosure,
+    useColorModeValue
 } from '@chakra-ui/react'
+import ColorModesSwitch from './colormodeswitch'
 import { SearchIcon, AddIcon } from '@chakra-ui/icons'
-import NextLink from 'next/link'
+import NewTaskForm from './createform'
 
 const Navbar = () => {
+    const { isOpen, onToggle } = useDisclosure()
+
+    const bgNav = useColorModeValue('teal.50', 'gray.700')
+
     return (
-        <Box bg='teal.50' p={5}>
+        <Box bg={bgNav} p={5}>
             <Container maxW={'container.lg'}>
 
                 <Flex align="center">
@@ -22,20 +29,23 @@ const Navbar = () => {
                         <InputLeftAddon cursor="pointer">
                             <SearchIcon />
                         </InputLeftAddon>
-                        <Input bg="white" placeholder="Search in your notes..." />
+                        <Input bg={useColorModeValue('white', 'gray.800')} placeholder="Search in your notes..." />
                     </InputGroup>
 
                     <Box>
-                        <NextLink href="/create">
-                            <Link>
-                                <Button p={0} size="sm" ml={3} colorScheme={'teal'}>
-                                    <AddIcon p={0} color="white" />
-                                </Button>
-                            </Link>
-                        </NextLink>
+                        <Button p={0} onClick={onToggle} size="sm" ml={3} colorScheme={'teal'}>
+                            <AddIcon p={0} color="white" />
+                        </Button>
+                    </Box>
+                    <Box mx={2}>
+                        <ColorModesSwitch />
                     </Box>
 
                 </Flex>
+
+                <Slide direction='bottom' color="teal.200" in={isOpen} style={{ zIndex: 10 }}>
+                    <NewTaskForm />
+                </Slide>
 
             </Container>
         </Box>
