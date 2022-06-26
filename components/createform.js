@@ -26,7 +26,7 @@ import Categories from '../utils/categories.json'
 
 const CreateForm = () => {
     const { categories: cats } = Categories
-    const { control, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm({
+    const { control, handleSubmit, watch, reset, formState: { errors, isSubmitting } } = useForm({
         defaultValues: {
             title: '',
             desc: '',
@@ -49,9 +49,10 @@ const CreateForm = () => {
     const onSubmit = async (data) => {
         try {
             const res = await axios.post('http://localhost:3000/api/actions/create', { data }).then(res => res.data)
-            console.log(res)
-        } catch (error) {
+            reset()
 
+        } catch (error) {
+            console.log(err)
         }
     }
 

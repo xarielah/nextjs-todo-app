@@ -34,7 +34,7 @@ const Navbar = () => {
 
                     <Box>
                         <Button p={0} onClick={onToggle} size="sm" ml={3} colorScheme={'teal'}>
-                            <AddIcon p={0} color="white" />
+                            <AddIcon p={0} color={useColorModeValue('white', 'teal.800')} />
                         </Button>
                     </Box>
                     <Box mx={2}>
