@@ -15,12 +15,17 @@ export async function createTask(req, res) {
 }
 
 export async function deleteTask(req, res) {
+    const { id } = req.body
+
     try {
         await ConnectDB()
-    } catch (err) {
+        await Task.deleteOne({ _id: id })
 
+        return res.status(200).end()
+    } catch (err) {
+        console.log(err)
+        return res.status(400).end()
     }
-    return res.send('hello world')
 }
 
 export async function updateTask(req, res) {
@@ -33,7 +38,7 @@ export async function updateTask(req, res) {
             data: results
         })
     } catch (err) {
-
+        return res.status(500).end()
     }
 }
 

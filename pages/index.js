@@ -17,7 +17,8 @@ const Home = ({ data }) => {
     <Box
       boxShadow={'sm'}
       borderRadius={'md'}
-      p={10}>
+      p={{ base: 2, sm: 5, md: 10 }}
+      justify="center">
       {data.count === 0
         ?
         <NoTasks />

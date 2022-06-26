@@ -1,14 +1,11 @@
-import { SimpleGrid } from '@chakra-ui/react'
+import { SimpleGrid, Flex } from '@chakra-ui/react'
 
 const GridLayout = ({ children }) => {
     return (
-        <SimpleGrid columns={[1, 2, 3, 4]} spacing={10}>
-
+        <SimpleGrid columns={{ sm: 1, md: 2, xl: 3 }} spacing={10}>
             {children}
         </SimpleGrid>
     )
 }
-{/* </SimpleGrid> */ }
-{/* <SimpleGrid column={[4, null, 1]} spacing={10}> */ }
 
 export default GridLayout

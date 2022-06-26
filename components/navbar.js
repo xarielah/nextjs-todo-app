@@ -15,7 +15,7 @@ import { SearchIcon, AddIcon } from '@chakra-ui/icons'
 import NewTaskForm from './createform'
 
 const Navbar = () => {
-    const { isOpen, onToggle } = useDisclosure()
+    const { isOpen, onToggle, onClose } = useDisclosure()
 
     const bgNav = useColorModeValue('teal.50', 'gray.700')
 
@@ -44,7 +44,8 @@ const Navbar = () => {
                 </Flex>
 
                 <Slide direction='bottom' color="teal.200" in={isOpen} style={{ zIndex: 10 }}>
-                    <NewTaskForm />
+                    <NewTaskForm onClose={onClose} />
+
                 </Slide>
 
             </Container>

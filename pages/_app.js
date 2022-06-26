@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion'
 import Layout from '../components/layouts/main'
 
 function MyApp({ Component, pageProps, router }) {
+
   return (
     <ChakraProvider>
       <AnimatePresence initial exitBeforeEnter>
