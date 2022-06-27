@@ -1,4 +1,5 @@
 import ConnectDB from "../utils/dbconnect"
+import * as actions from '../utils/actions'
 import Task from '../models/taskSchema'
 
 export async function createTask(req, res) {
@@ -29,15 +30,22 @@ export async function deleteTask(req, res) {
 }
 
 export async function updateTask(req, res) {
+    const { data: data } = req.body
+    const { action } = req.query
+    const id = data._id
+
     try {
         await ConnectDB()
         const results = await Task.find({})
 
-        return res.status(200).json({
-            count: results.length,
-            data: results
-        })
+        if (action === actions.UPDATE_ARCHIVE) {
+            await Task.findByIdAndUpdate(id, { completed: !data.completed })
+            return res.status(200).end()
+        }
+
+        return res.status(200)
     } catch (err) {
+        console.log(err)
         return res.status(500).end()
     }
 }

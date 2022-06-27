@@ -9,30 +9,28 @@ import {
     Badge,
     HStack
 } from '@chakra-ui/react'
-import { StarIcon, DeleteIcon } from '@chakra-ui/icons'
-// import { useRef } from 'react'
-
+import axios from 'axios'
+import { StarIcon, DeleteIcon, CheckCircleIcon, Icon } from '@chakra-ui/icons'
+import * as actions from '../utils/actions'
+import { MdAssignmentReturn, MdAssignmentReturned } from 'react-icons/md'
 
 const Card = ({ data, delTaskDialog }) => {
-    // const [delAlert, setDelAlert] = useState(false)
     const cardBg = useColorModeValue('gray.50', 'gray.700')
 
     const creationDate = new Date(data.createdAt)
     const fixDate = (n) => n > 9 ? n : '0' + n
 
-    // const progressColor = (n) => {
-    //     switch (n) {
-    //         case n > 7:
-    //             return 'pink.400'
-    //         case n > 5:
-    //             return 'orange.400'
-    //         default:
-    //             return 'teal.400'
-    //     }
-    // }
-
     const displayDate = `${fixDate(creationDate.getUTCDate() + 1)}/${fixDate(creationDate.getUTCMonth() + 1)}/${creationDate.getUTCFullYear()}`
     const displayHour = `${fixDate((creationDate.getUTCHours() + 3) === 24 ? 0 : creationDate.getUTCHours() + 3)}:${fixDate(creationDate.getUTCMinutes())}`
+
+    const updateArchive = async (data) => {
+        try {
+            const res = await axios.post(`http://localhost:3000/api/actions/update?action=${actions.UPDATE_ARCHIVE}`, { data }).then(res => res.data)
+            window.location.reload(false)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <Box
@@ -61,11 +59,29 @@ const Card = ({ data, delTaskDialog }) => {
                 <Box mx={3} mt={3} className="task-options">
                     <Flex align="center" justify={'flex-end'}>
 
+                        {data.completed
+                            ?
+                            <Icon
+                                as={MdAssignmentReturn}
+                                _hover={{ color: 'blue.300', cursor: 'pointer' }}
+                                onClick={() => updateArchive(data)}
+                                w={5}
+                                h={5}
+                            />
+                            :
+                            <Icon
+                                as={MdAssignmentReturned}
+                                _hover={{ color: 'green.500', cursor: 'pointer' }}
+                                onClick={() => updateArchive(data)}
+                                w={5}
+                                h={5}
+                            />
+                        }
+
                         <DeleteIcon
                             cursor={'pointer'}
                             _hover={{ color: 'red' }}
                             onClick={() => delTaskDialog(data)} />
-
                     </Flex>
                 </Box>}
 

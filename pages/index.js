@@ -1,7 +1,8 @@
 import NoTasks from '../components/notasks'
 import DisplayTasks from '../components/displaytasks'
 import axios from 'axios'
-import { Box } from '@chakra-ui/react'
+import NextLink from 'next/link'
+import { Box, Link, Button } from '@chakra-ui/react'
 
 export async function getServerSideProps(ctx) {
   const host = ctx.req.headers.host
@@ -12,6 +13,7 @@ export async function getServerSideProps(ctx) {
 }
 
 const Home = ({ data }) => {
+  const filteredData = data.data?.filter((item) => !item.completed)
 
   return (
     <Box
@@ -19,11 +21,12 @@ const Home = ({ data }) => {
       borderRadius={'md'}
       p={{ base: 2, sm: 5, md: 10 }}
       justify="center">
-      {data.count === 0
+
+      {filteredData.length === 0
         ?
         <NoTasks />
         :
-        <DisplayTasks data={data} />}
+        <DisplayTasks data={filteredData} />}
     </Box>
   )
 }

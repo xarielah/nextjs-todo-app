@@ -28,6 +28,10 @@ const taskSchema = new Schema({
     },
     pinned: {
         type: Boolean
+    },
+    completed: {
+        type: Boolean,
+        default: false
     }
 })
 

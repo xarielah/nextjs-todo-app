@@ -33,7 +33,7 @@ const Navbar = () => {
                     </InputGroup>
 
                     <Box>
-                        <Button p={0} onClick={onToggle} size="sm" ml={3} colorScheme={'teal'}>
+                        <Button p={0} onClick={onToggle} size="sm" ml={3} colorScheme={'linkedin'}>
                             <AddIcon p={0} color={useColorModeValue('white', 'teal.800')} />
                         </Button>
                     </Box>
@@ -45,7 +45,6 @@ const Navbar = () => {
 
                 <Slide direction='bottom' color="teal.200" in={isOpen} style={{ zIndex: 10 }}>
                     <NewTaskForm onClose={onClose} />
-
                 </Slide>
 
             </Container>
