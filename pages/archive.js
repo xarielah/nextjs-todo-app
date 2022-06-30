@@ -1,7 +1,5 @@
-import NoTasks from '../components/notasks'
-import DisplayTasks from '../components/displaytasks'
 import axios from 'axios'
-import { Box } from '@chakra-ui/react'
+import DisplayData from '../components/displaydata'
 
 export async function getServerSideProps(ctx) {
     const host = ctx.req.headers.host
@@ -14,19 +12,7 @@ export async function getServerSideProps(ctx) {
 const Archive = ({ data }) => {
     const filteredData = data.data?.filter((item) => item.completed)
 
-    return (
-        <Box
-            boxShadow={'sm'}
-            borderRadius={'md'}
-            p={{ base: 2, sm: 5, md: 10 }}
-            justify="center">
-            {filteredData.length === 0
-                ?
-                <NoTasks />
-                :
-                <DisplayTasks data={filteredData} />}
-        </Box>
-    )
+    return <DisplayData filteredData={filteredData} />
 }
 
 export default Archive

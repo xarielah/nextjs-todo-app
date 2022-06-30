@@ -1,109 +1,67 @@
 import {
-    Box,
-    Text,
-    Heading,
-    Divider,
-    useColorModeValue,
-    Progress,
-    Flex,
-    Badge,
-    HStack
-} from '@chakra-ui/react'
-import axios from 'axios'
-import { StarIcon, DeleteIcon, CheckCircleIcon, Icon } from '@chakra-ui/icons'
-import * as actions from '../utils/actions'
-import { MdAssignmentReturn, MdAssignmentReturned } from 'react-icons/md'
+  Box,
+  Text,
+  Heading,
+  Divider,
+  useColorModeValue,
+  Progress,
+  Badge,
+} from "@chakra-ui/react";
+import CardHeader from "./cardheader";
 
 const Card = ({ data, delTaskDialog }) => {
-    const cardBg = useColorModeValue('gray.50', 'gray.700')
+  const cardBg = useColorModeValue("gray.50", "gray.700");
 
-    const creationDate = new Date(data.createdAt)
-    const fixDate = (n) => n > 9 ? n : '0' + n
+  const creationDate = new Date(data.createdAt);
+  const fixDate = (n) => (n > 9 ? n : "0" + n);
 
-    const displayDate = `${fixDate(creationDate.getUTCDate() + 1)}/${fixDate(creationDate.getUTCMonth() + 1)}/${creationDate.getUTCFullYear()}`
-    const displayHour = `${fixDate((creationDate.getUTCHours() + 3) === 24 ? 0 : creationDate.getUTCHours() + 3)}:${fixDate(creationDate.getUTCMinutes())}`
+  const displayDate = `${fixDate(creationDate.getUTCDate() + 1)}/${fixDate(
+    creationDate.getUTCMonth() + 1
+  )}/${creationDate.getUTCFullYear()}`;
+  const displayHour = `${fixDate(
+    creationDate.getUTCHours() + 3 === 24 ? 0 : creationDate.getUTCHours() + 3
+  )}:${fixDate(creationDate.getUTCMinutes())}`;
 
-    const updateArchive = async (data) => {
-        try {
-            const res = await axios.post(`http://localhost:3000/api/actions/update?action=${actions.UPDATE_ARCHIVE}`, { data }).then(res => res.data)
-            window.location.reload(false)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+  return (
+    <Box
+      bg={cardBg}
+      maxW="300px"
+      maxH="300px"
+      boxShadow={"md"}
+      borderTop={`10px solid ${data.color === "#FFFFFF" ? "#CCC" : data.color}`}
+      borderRadius={"md"}
+    >
+      <CardHeader data={data} delTaskDialog={(data) => delTaskDialog(data)} />
 
-    return (
-        <Box
-            bg={cardBg}
-            maxW="300px"
-            maxH="300px"
-            boxShadow={'md'}
-            borderTop={`10px solid ${data.color === '#FFFFFF' ? '#CCC' : data.color}`}
-            borderRadius={'md'}>
+      <Box px={5} pb={5}>
+        <Box my={4}>
+          <Box>
+            <Heading size="md">
+              {data.title} <Badge>{data.cat}</Badge>
+            </Heading>
+            <Text as="sub">
+              Created at {displayDate} {displayHour}
+            </Text>
+          </Box>
 
-            {data.pinned ? <Box mx={3} mt={3}>
-                <Flex align="center" justify={'space-between'}>
-                    <HStack>
-                        <StarIcon />
-                        <Text>Pinned</Text>
-                    </HStack>
+          <Divider my={2} />
 
-                    <DeleteIcon
-                        cursor={'pointer'}
-                        _hover={{ color: 'red' }}
-                        onClick={() => delTaskDialog(data)} />
+          <Text>{data.desc}</Text>
+        </Box>
+        <Box>
+          <Text as="sub">Level of urgency:</Text>
+          <Progress
+            mt={1}
+            value={parseInt(data.urgency) !== 0 ? parseInt(data.urgency) : 1}
+            size="sm"
+            borderRadius={"md"}
+            max={10}
+            colorScheme={"teal"}
+          />
+        </Box>
+      </Box>
+    </Box>
+  );
+};
 
-                </Flex>
-            </Box>
-                :
-                <Box mx={3} mt={3} className="task-options">
-                    <Flex align="center" justify={'flex-end'}>
-
-                        {data.completed
-                            ?
-                            <Icon
-                                as={MdAssignmentReturn}
-                                _hover={{ color: 'blue.300', cursor: 'pointer' }}
-                                onClick={() => updateArchive(data)}
-                                w={5}
-                                h={5}
-                            />
-                            :
-                            <Icon
-                                as={MdAssignmentReturned}
-                                _hover={{ color: 'green.500', cursor: 'pointer' }}
-                                onClick={() => updateArchive(data)}
-                                w={5}
-                                h={5}
-                            />
-                        }
-
-                        <DeleteIcon
-                            cursor={'pointer'}
-                            _hover={{ color: 'red' }}
-                            onClick={() => delTaskDialog(data)} />
-                    </Flex>
-                </Box>}
-
-            <Box px={5} pb={5}>
-
-                <Box my={4}>
-                    <Box>
-                        <Heading size="md">{data.title} <Badge>{data.cat}</Badge></Heading>
-                        <Text as="sub">Created at {displayDate} {displayHour}</Text>
-                    </Box>
-
-                    <Divider my={2} />
-
-                    <Text>{data.desc}</Text>
-                </Box>
-                <Box>
-                    <Text as="sub">Level of urgency:</Text>
-                    <Progress mt={1} value={parseInt(data.urgency) !== 0 ? parseInt(data.urgency) : 1} size='sm' borderRadius={'md'} max={10} colorScheme={'teal'} />
-                </Box>
-            </Box>
-        </Box >
-    )
-}
-
-export default Card
+export default Card;
