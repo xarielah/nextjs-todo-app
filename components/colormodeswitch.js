@@ -6,14 +6,11 @@ const ColorModeButton = () => {
     const { toggleColorMode } = useColorMode()
 
     return (
-        // <Button p={0} size="sm" onClick={toggleColorMode} colorScheme={useColorModeValue('purple', 'orange')}>
         <HStack>
             <SunIcon color={useColorModeValue('orange.400', 'white')} />
             <Switch size="lg" colorScheme={'purple'} isChecked={useColorModeValue(false, true)} onChange={toggleColorMode} />
             <MoonIcon color={useColorModeValue('black', 'purple.300')} />
         </HStack>
-        // </Button>
-
     )
 }
 

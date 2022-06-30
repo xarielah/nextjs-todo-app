@@ -3,16 +3,30 @@ import Card from './card'
 import { Box, useDisclosure, Divider, Button } from '@chakra-ui/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import DeletionAlert from './deletionalert'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { SearchContext } from './searchContext'
+import NoResult from './notasks'
 
 const DisplayTasks = ({ data }) => {
     const { isOpen, onClose, onToggle } = useDisclosure()
     const [delData, setDelData] = useState({})
     const [sortingMethodPinned, setSortMethodPinned] = useState(false)
     const [sortingMethod, setSortMethod] = useState(false)
+    const { searchTerm } = useContext(SearchContext)
 
-    const pinned = data.filter((item) => item.pinned && !item.complete)
-    const notPinned = data.filter((item) => !item.pinned && !item.complete)
+
+    //  Search Algo
+    const globalData = searchTerm !== '' ?
+        data.filter((item) =>
+            (item.title.toLowerCase().includes(searchTerm) || item.title.includes(searchTerm))
+            ||
+            (item.desc.toLowerCase().includes(searchTerm) || item.desc.includes(searchTerm)))
+        :
+        data
+
+
+    const pinned = globalData.filter((item) => item.pinned && !item.complete)
+    const notPinned = globalData.filter((item) => !item.pinned && !item.complete)
 
     const changeSortMethodPinned = () => setSortMethodPinned(prev => !prev)
     const changeSortMethod = () => setSortMethod(prev => !prev)
@@ -27,9 +41,13 @@ const DisplayTasks = ({ data }) => {
         else if (!sortingMethod) return parseInt(b.urgency) - parseInt(a.urgency)
     }
 
+
     return (
         <Box>
             {isOpen && <DeletionAlert data={delData} isOpen={isOpen} onClose={onClose} />}
+
+            {(notPinned.length === 0 && pinned.length === 0) && <NoResult />}
+
             {pinned.length !== 0 &&
                 <>
                     <Box my={5}>

@@ -25,8 +25,8 @@ const Card = ({ data, delTaskDialog }) => {
   return (
     <Box
       bg={cardBg}
-      maxW="300px"
-      maxH="300px"
+      maxW="250px"
+      maxH="250px"
       boxShadow={"md"}
       borderTop={`10px solid ${data.color === "#FFFFFF" ? "#CCC" : data.color}`}
       borderRadius={"md"}

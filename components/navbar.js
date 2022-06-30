@@ -14,21 +14,27 @@ import {
 import ColorModesSwitch from './colormodeswitch';
 import { SearchIcon, AddIcon, CloseIcon } from '@chakra-ui/icons';
 import NewTaskForm from './createform';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { SearchContext } from './searchContext';
 
-const SearchInput = () => (
-  <InputGroup>
-    <InputLeftAddon cursor="pointer">
-      <SearchIcon />
-    </InputLeftAddon>
-    <Input
-      boxShadow={{ base: 'md', md: 'none' }}
-      w={{ base: '80%', md: '100%' }}
-      bg={useColorModeValue('white', 'gray.800')}
-      placeholder="Search in your notes..."
-    />
-  </InputGroup>
-);
+const SearchInput = () => {
+  const { setSearchTerm } = useContext(SearchContext)
+
+  return (
+    <InputGroup>
+      <InputLeftAddon cursor="pointer">
+        <SearchIcon />
+      </InputLeftAddon>
+      <Input
+        boxShadow={{ base: 'md', md: 'none' }}
+        w={{ base: '80%', md: '100%' }}
+        bg={useColorModeValue('white', 'gray.800')}
+        placeholder="Search in your notes..."
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+    </InputGroup>
+  );
+}
 
 const Navbar = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
