@@ -1,18 +1,18 @@
-import axios from 'axios'
-import DisplayData from '../components/displaydata'
+import axios from 'axios';
+import DisplayData from '../components/displaydata';
 
 export async function getServerSideProps(ctx) {
-  const host = ctx.req.headers.host
-  const res = await axios.get(`http://${host}/api/actions/read`).then(res => res.data)
+  const url = process.env.PROD ? process.env.PROD : process.env.LOCAL;
+  const res = await axios.get(`${url}/api/actions/read`).then(res => res.data);
   return {
-    props: { data: res }
-  }
+    props: { data: res },
+  };
 }
 
 const Home = ({ data }) => {
-  const filteredData = data.data?.filter((item) => !item.completed)
+  const filteredData = data.data?.filter(item => !item.completed);
 
-  return <DisplayData filteredData={filteredData} />
-}
+  return <DisplayData filteredData={filteredData} />;
+};
 
-export default Home
+export default Home;

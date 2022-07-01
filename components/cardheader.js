@@ -1,6 +1,5 @@
-import ArchiveButton from './archivebtn';
-import { DeleteIcon, StarIcon, ChevronDownIcon } from '@chakra-ui/icons';
-import { Flex, HStack, Text, Box, Button } from '@chakra-ui/react';
+import { StarIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import { Flex, HStack, Text, Box } from '@chakra-ui/react';
 import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import axios from 'axios';
 import * as actions from '../utils/actions';
@@ -30,15 +29,15 @@ const CardHeader = ({ data, delTaskDialog }) => {
             as={Box}
             p={1}
             borderRadius={'md'}
+            _hover={{ color: 'purple.200' }}
             lineHeight={0}
             bg={'whiteAlpha.200'}
-            cursor={'pointer'}
-            _hover={{ backgroundColor: 'whiteAlpha.300' }}>
+            cursor={'pointer'}>
             <ChevronDownIcon />
           </MenuButton>
           <MenuList>
             <MenuItem onClick={() => updateArchive(data)}>{data.completed ? 'Set as incomplete' : 'Set as completed'}</MenuItem>
-            <MenuItem onClick={delTaskDialog} color="red.400">
+            <MenuItem onClick={() => delTaskDialog(data)} color="red.400">
               Delete Task
             </MenuItem>
           </MenuList>
@@ -46,46 +45,6 @@ const CardHeader = ({ data, delTaskDialog }) => {
       </Flex>
     </Box>
   );
-
-  if (data.pinned)
-    return (
-      <Box mx={3} mt={3}>
-        <Flex align="center" justify={'space-between'}>
-          <HStack>
-            <StarIcon />
-            <Text>Pinned</Text>
-          </HStack>
-
-          <Flex align="center">
-            <ArchiveButton data={data} />
-
-            <DeleteIcon
-              cursor={'pointer'}
-              _hover={{
-                color: 'red',
-              }}
-              onClick={() => delTaskDialog(data)}
-            />
-          </Flex>
-        </Flex>
-      </Box>
-    );
-  else
-    return (
-      <Box mx={3} mt={3} className="task-options">
-        <Flex align="center" justify={'flex-end'}>
-          <ArchiveButton data={data} />
-
-          <DeleteIcon
-            cursor={'pointer'}
-            _hover={{
-              color: 'red',
-            }}
-            onClick={() => delTaskDialog(data)}
-          />
-        </Flex>
-      </Box>
-    );
 };
 
 export default CardHeader;

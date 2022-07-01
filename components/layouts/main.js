@@ -1,9 +1,8 @@
-import { Container, Box, Link, Button } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import { Container, Box } from '@chakra-ui/react';
 import Head from 'next/head';
 import Navbar from '../navbar';
+import Footer from '../footer';
 import { useRouter } from 'next/router';
-import MenuList from '../menu';
 
 const MainPageLayout = ({ children }) => {
   const router = useRouter();
@@ -18,9 +17,9 @@ const MainPageLayout = ({ children }) => {
 
       <Navbar router={router} />
 
-      <Container maxW="container.xl" mt={5}>
-
+      <Container maxW="container.xl" mt={5} h={'100vh'}>
         {children}
+        <Footer />
       </Container>
     </Box>
   );
