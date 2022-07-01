@@ -1,4 +1,4 @@
-import { Link, Button, useColorModeValue } from '@chakra-ui/react';
+import { Link, Button, useColorModeValue, Box } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 const menu = [
@@ -15,7 +15,7 @@ const menu = [
 const MenuList = ({ route }) => {
   const conditionedBtnClr = useColorModeValue('teal', 'purple');
   return (
-    <>
+    <Box>
       {menu.map((item, index) => (
         <NextLink key={index} href={item.href}>
           <Link style={{ textDecoration: 'none' }}>
@@ -25,7 +25,7 @@ const MenuList = ({ route }) => {
           </Link>
         </NextLink>
       ))}
-    </>
+    </Box>
   );
 };
 

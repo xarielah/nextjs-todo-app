@@ -16,6 +16,7 @@ import { SearchIcon, AddIcon, CloseIcon } from '@chakra-ui/icons';
 import NewTaskForm from './createform';
 import { useState, useContext } from 'react';
 import { SearchContext } from './searchContext';
+import MenuList from './menu';
 
 const SearchInput = () => {
   const { setSearchTerm } = useContext(SearchContext)
@@ -36,7 +37,7 @@ const SearchInput = () => {
   );
 }
 
-const Navbar = () => {
+const Navbar = ({ router }) => {
   const { isOpen, onToggle, onClose } = useDisclosure();
   const [displaySearch, setDisplaySearch] = useState(false);
   const toggleSearchBar = () => setDisplaySearch(prev => !prev);
@@ -47,8 +48,10 @@ const Navbar = () => {
 
   return (
     <Box bg={bgNav} py={5} px={{ base: 0, md: 5 }}>
-      <Container maxW={'container.lg'}>
+      <Container maxW={'container.xl'} px={12}>
         <Flex align="center" justify={'space-between'} flexDirection={{ base: 'row-reverse', md: 'row' }}>
+          <MenuList route={router.asPath} />
+
           <Box display={{ base: 'none', md: 'block' }}>
             <SearchInput />
           </Box>
@@ -90,7 +93,7 @@ const Navbar = () => {
           <NewTaskForm onClose={onClose} />
         </Slide>
       </Container>
-    </Box>
+    </Box >
   );
 };
 

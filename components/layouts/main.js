@@ -16,12 +16,9 @@ const MainPageLayout = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar />
+      <Navbar router={router} />
 
       <Container maxW="container.xl" mt={5}>
-        <Box align="center">
-          <MenuList route={router.asPath} />
-        </Box>
 
         {children}
       </Container>
