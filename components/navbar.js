@@ -19,7 +19,7 @@ import { SearchContext } from './searchContext';
 import MenuList from './menu';
 
 const SearchInput = () => {
-  const { setSearchTerm } = useContext(SearchContext)
+  const { setSearchTerm } = useContext(SearchContext);
 
   return (
     <InputGroup>
@@ -31,11 +31,11 @@ const SearchInput = () => {
         w={{ base: '80%', md: '100%' }}
         bg={useColorModeValue('white', 'gray.800')}
         placeholder="Search in your notes..."
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={e => setSearchTerm(e.target.value)}
       />
     </InputGroup>
   );
-}
+};
 
 const Navbar = ({ router }) => {
   const { isOpen, onToggle, onClose } = useDisclosure();
@@ -58,7 +58,7 @@ const Navbar = ({ router }) => {
 
           <Flex gap={3} flexDirection={'row'}>
             <Button p={0} onClick={onToggle} size="sm" ml={3} colorScheme={BTNClr}>
-              <AddIcon p={0} color={useColorModeValue('white', 'teal.800')} />
+              <AddIcon p={0} color={useColorModeValue('white', 'black')} />
             </Button>
 
             <ColorModesSwitch />
@@ -93,7 +93,7 @@ const Navbar = ({ router }) => {
           <NewTaskForm onClose={onClose} />
         </Slide>
       </Container>
-    </Box >
+    </Box>
   );
 };
 
